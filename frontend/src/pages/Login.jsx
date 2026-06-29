@@ -31,20 +31,24 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-1">Connexion</h1>
-        <p className="text-sm text-gray-500 mb-6">Bienvenue sur TodoApp</p>
+    <div className="relative min-h-screen bg-[#0d0d1a] flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent pointer-events-none" />
+
+      <div className="relative glass rounded-3xl p-8 w-full max-w-md">
+        <div className="text-3xl font-black gradient-text mb-6">TaskFlow</div>
+
+        <h1 className="text-xl font-bold text-white mb-1">Connexion</h1>
+        <p className="text-slate-400 text-sm mb-6">Bienvenue, ravi de vous revoir.</p>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-sm">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-slate-400 text-sm font-medium mb-1">Email</label>
             <input
               type="email"
               name="email"
@@ -52,12 +56,12 @@ export default function Login() {
               onChange={handleChange}
               required
               placeholder="vous@exemple.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+            <label className="block text-slate-400 text-sm font-medium mb-1">Mot de passe</label>
             <input
               type="password"
               name="password"
@@ -65,22 +69,22 @@ export default function Login() {
               onChange={handleChange}
               required
               placeholder="••••••••"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-lg transition-colors text-sm"
+            className="w-full py-2.5 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 disabled:opacity-50 text-white font-semibold rounded-xl transition-all duration-200 text-sm mt-2"
           >
             {loading ? 'Connexion…' : 'Se connecter'}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-6 text-center text-sm text-slate-500">
           Pas encore de compte ?{' '}
-          <Link to="/register" className="text-blue-600 hover:underline font-medium">
+          <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
             S'inscrire
           </Link>
         </p>

@@ -3,13 +3,16 @@ export default function CategoryBadge({ categoryId, categories = [] }) {
 
   if (!category) return null
 
-  const bgColor = (category.color || '#6B7280') + '20'
-  const textColor = category.color || '#6B7280'
+  const color = category.color || '#6366f1'
 
   return (
     <span
-      className="px-2 py-1 rounded-full text-xs font-medium"
-      style={{ backgroundColor: bgColor, color: textColor }}
+      className="px-2.5 py-0.5 rounded-full text-xs font-medium border"
+      style={{
+        backgroundColor: color + '20',
+        color: color,
+        borderColor: color + '4d',
+      }}
     >
       {category.icon ? `${category.icon} ` : ''}{category.name}
     </span>

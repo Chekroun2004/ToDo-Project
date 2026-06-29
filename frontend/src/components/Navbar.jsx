@@ -11,17 +11,18 @@ export default function Navbar() {
   }
 
   const linkClass = ({ isActive }) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-      isActive ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-500 hover:text-white'
+    `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+      isActive
+        ? 'bg-white/10 text-white'
+        : 'text-slate-400 hover:text-white hover:bg-white/5'
     }`
 
   return (
-    <nav className="bg-blue-600 text-white shadow-lg">
+    <nav className="bg-[#0d0d1a]/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <div className="flex items-center gap-8">
-            <span className="text-xl font-bold tracking-tight">TodoApp</span>
+            <span className="text-xl font-bold gradient-text">TaskFlow</span>
             <div className="hidden md:flex items-center gap-1">
               <NavLink to="/" end className={linkClass}>Dashboard</NavLink>
               <NavLink to="/todos" className={linkClass}>Mes Tâches</NavLink>
@@ -30,17 +31,16 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* User section */}
           <div className="flex items-center gap-4">
-            <NavLink to="/profile" className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors">
-              <div className="w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center text-sm font-semibold">
+            <NavLink to="/profile" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-sm font-semibold text-white">
                 {user?.name?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <span className="text-sm font-medium hidden sm:block">{user?.name || 'Utilisateur'}</span>
             </NavLink>
             <button
               onClick={handleLogout}
-              className="px-3 py-1.5 bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium rounded-md transition-colors"
+              className="text-slate-400 hover:text-white text-sm transition-colors"
             >
               Déconnexion
             </button>

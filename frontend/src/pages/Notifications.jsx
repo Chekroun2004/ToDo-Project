@@ -3,9 +3,9 @@ import { useAuth } from '../context/AuthContext'
 import api from '../api/axios'
 
 const typeConfig = {
-  overdue: { label: 'En retard', className: 'bg-red-100 text-red-700', icon: '⚠️' },
-  due_soon: { label: 'Échéance proche', className: 'bg-orange-100 text-orange-700', icon: '🔔' },
-  default: { label: 'Notification', className: 'bg-blue-100 text-blue-700', icon: '📋' },
+  overdue: { label: 'En retard', className: 'bg-red-500/15 text-red-400 border border-red-500/30', icon: '⚠️' },
+  due_soon: { label: 'Échéance proche', className: 'bg-amber-500/15 text-amber-400 border border-amber-500/30', icon: '🔔' },
+  default: { label: 'Notification', className: 'bg-blue-500/15 text-blue-400 border border-blue-500/30', icon: '📋' },
 }
 
 function formatDate(dateStr) {
@@ -76,7 +76,7 @@ export default function Notifications() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-400 text-sm">Chargement…</div>
+        <div className="text-slate-500 text-sm">Chargement…</div>
       </div>
     )
   }
@@ -85,9 +85,9 @@ export default function Notifications() {
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Notifications</h1>
+          <h1 className="text-2xl font-bold text-white">Notifications</h1>
           {unreadCount > 0 && (
-            <p className="text-sm text-gray-500 mt-1">{unreadCount} non lue(s)</p>
+            <p className="text-sm text-slate-400 mt-1">{unreadCount} non lue(s)</p>
           )}
         </div>
         <div className="flex gap-2">
@@ -95,7 +95,7 @@ export default function Notifications() {
             <button
               onClick={handleMarkAllRead}
               disabled={markingAll}
-              className="px-3 py-1.5 text-sm bg-blue-50 text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 text-sm bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 rounded-xl transition-all disabled:opacity-50"
             >
               {markingAll ? '…' : 'Tout marquer comme lu'}
             </button>
@@ -104,7 +104,7 @@ export default function Notifications() {
             <button
               onClick={handleClearRead}
               disabled={clearing}
-              className="px-3 py-1.5 text-sm bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 text-sm bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 rounded-xl transition-all disabled:opacity-50"
             >
               {clearing ? '…' : 'Supprimer les lues'}
             </button>
@@ -113,11 +113,11 @@ export default function Notifications() {
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{error}</div>
+        <div className="p-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-sm">{error}</div>
       )}
 
       {notifications.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-xl shadow text-gray-400">
+        <div className="glass rounded-2xl py-16 text-center text-slate-500">
           <p className="text-4xl mb-3">🔕</p>
           <p className="text-base font-medium">Aucune notification</p>
           <p className="text-sm mt-1">Vous êtes à jour !</p>
@@ -130,8 +130,8 @@ export default function Notifications() {
             return (
               <div
                 key={notification._id}
-                className={`bg-white rounded-xl shadow p-4 border-l-4 transition-opacity ${
-                  isRead ? 'border-gray-200 opacity-60' : 'border-blue-500'
+                className={`glass rounded-2xl p-4 border-l-4 transition-all ${
+                  isRead ? 'border-white/10 opacity-50' : 'border-indigo-500'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -142,21 +142,21 @@ export default function Notifications() {
                         {type.label}
                       </span>
                       {isRead && (
-                        <span className="text-xs text-gray-400">Lu</span>
+                        <span className="text-xs text-slate-500">Lu</span>
                       )}
                     </div>
-                    <p className="mt-1 text-sm font-medium text-gray-800 truncate">
+                    <p className="mt-1 text-sm font-medium text-white truncate">
                       {notification.title || notification.todoTitle || notification.message || 'Notification'}
                     </p>
                     {notification.body && (
-                      <p className="text-xs text-gray-500 mt-0.5">{notification.body}</p>
+                      <p className="text-xs text-slate-400 mt-0.5">{notification.body}</p>
                     )}
-                    <p className="text-xs text-gray-400 mt-1.5">
+                    <p className="text-xs text-slate-500 mt-1.5">
                       {formatDate(notification.createdAt || notification.sentAt)}
                     </p>
                   </div>
                   {!isRead && (
-                    <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-1.5" />
+                    <div className="w-2 h-2 rounded-full bg-indigo-500 shrink-0 mt-1.5" />
                   )}
                 </div>
               </div>

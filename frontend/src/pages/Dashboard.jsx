@@ -38,14 +38,14 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-400 text-sm">Chargement…</div>
+        <div className="text-slate-500 text-sm">Chargement…</div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+      <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-sm">
         {error}
       </div>
     )
@@ -64,58 +64,75 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">
+        <h1 className="text-2xl font-bold text-white">
           Bonjour, {user?.name?.split(' ')[0] || 'vous'} 👋
         </h1>
-        <p className="text-gray-500 text-sm mt-1">Voici un aperçu de vos tâches</p>
+        <p className="text-slate-400 text-sm mt-1">Voici un aperçu de vos tâches</p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total des tâches"
           value={totalTasks}
           subtitle="toutes les tâches"
           color="blue"
+          icon="📋"
         />
         <StatCard
           title="Taux de complétion"
           value={`${completionRate}%`}
           subtitle={`${completedCount} tâche(s) terminée(s)`}
           color="green"
+          icon="✅"
         />
         <StatCard
           title="En retard"
           value={overdueCount}
           subtitle="tâche(s) échue(s)"
           color="red"
+          icon="⚠️"
         />
         <StatCard
           title="En cours"
           value={inProgressCount}
           subtitle="tâche(s) active(s)"
           color="orange"
+          icon="⚡"
         />
       </div>
 
-      {/* Recent todos */}
+      {totalTasks > 0 && (
+        <div className="glass rounded-2xl p-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-400 text-sm">Progression globale</span>
+            <span className="text-white text-sm font-semibold">{completionRate}%</span>
+          </div>
+          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full transition-all duration-500"
+              style={{ width: `${completionRate}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-700">Tâches récentes</h2>
+          <h2 className="text-lg font-semibold text-white">Tâches récentes</h2>
           <button
             onClick={() => navigate('/todos')}
-            className="text-sm text-blue-600 hover:underline font-medium"
+            className="text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors"
           >
             Voir toutes les tâches →
           </button>
         </div>
 
         {recentTodos.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow text-gray-400">
-            <p className="text-lg mb-2">Aucune tâche pour l'instant</p>
+          <div className="glass rounded-2xl py-16 text-center">
+            <p className="text-slate-500 text-base mb-4">Aucune tâche pour l'instant</p>
             <button
               onClick={() => navigate('/todos')}
-              className="mt-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-sm font-semibold rounded-xl transition-all duration-200"
             >
               Créer une tâche
             </button>
