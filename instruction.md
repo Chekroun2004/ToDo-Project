@@ -66,6 +66,7 @@ Projet universitaire Master IGOV — UM5 Rabat. Deadline : 15 Juillet 2026.
 6. **`frontend/src/pages/Dashboard.jsx` — noms de champs stats incorrects** : Le Dashboard lisait `stats?.total`, `stats?.byStatus?.done`, `stats?.overdue` mais le statistics-service retourne `totalTasks`, `byStatus.completed`, `overdueTasks`. Les compteurs affichaient toujours 0. Corrigé.
 7. **`frontend/src/pages/Todos.jsx` — valeurs de statut incorrectes dans les filtres** : Les filtres utilisaient `'todo'` et `'done'` mais le modèle MongoDB utilise `'pending'` et `'completed'`. Les filtres ne retournaient aucun résultat. Corrigé.
 8. **`frontend/vite.config.js` — proxy dev pointe vers `http://nginx`** : En mode développement (`npm run dev`), le proxy `/api` pointait vers `http://nginx` (hostname Docker interne, non résolvable sur la machine hôte) → toutes les requêtes API échouaient avec une erreur réseau. Corrigé en `http://localhost`.
+9. **`frontend/src/pages/TodoDetail.jsx` et `frontend/src/components/TaskCard.jsx` — valeurs enum statut incorrectes** : `TodoDetail.jsx` envoyait `"todo"` et `"done"` au lieu de `"pending"` et `"completed"` via le `<select>` statut → erreur Mongoose `Validation failed: status: 'done' is not a valid enum value`. `TaskCard.jsx` utilisait les mêmes mauvaises clés pour l'affichage et la vérification overdue. Corrigé dans les deux fichiers.
 
 ---
 
@@ -186,10 +187,11 @@ Projet universitaire Master IGOV — UM5 Rabat. Deadline : 15 Juillet 2026.
 
 - ✅ `notification-service/` Node.js + Express + Mongoose + node-cron, port 3005, MongoDB `notification_db`
 - ✅ Modèle `Notification` : userId, todoId, todoTitle, type (overdue/due_soon), isRead, createdAt
-- ✅ Cron job toutes les heures : appel `/api/todos/overdue`, création notifications sans doublons
+- ✅ Cron job toutes les heures (`0 * * * *`) : appel `/api/todos/overdue`, création notifications sans doublons
 - ✅ `GET /api/notifications/:userId` — non lues en premier (JWT + ownership)
 - ✅ `PUT /api/notifications/:id/read` — marquer comme lue (JWT)
 - ✅ `DELETE /api/notifications/clear/:userId` — supprimer les lues (JWT)
+- ✅ `POST /api/notifications/trigger` — déclenchement manuel du cron (JWT), pour tests sans attendre l'heure pile
 - ✅ `GET /api/notifications/health`
 
 ---
@@ -201,9 +203,21 @@ Projet universitaire Master IGOV — UM5 Rabat. Deadline : 15 Juillet 2026.
 - ✅ AuthContext (login/logout, persistance localStorage, isAuthenticated)
 - ✅ ProtectedRoute (redirect `/login` si non authentifié)
 - ✅ Pages : `/login`, `/register`, `/` (Dashboard), `/todos`, `/todos/:id`, `/stats`, `/profile`, `/notifications`
-- ✅ Composants : `Navbar`, `TaskCard`, `CategoryBadge`, `PriorityBadge`, `StatCard`
-- ✅ Dashboard : 4 StatCards + 5 tâches récentes
+- ✅ Composants : `Navbar`, `TaskCard`, `CategoryBadge`, `PriorityBadge`, `StatCard`, `AuroraBackground`
+- ✅ Dashboard : 4 StatCards + 6 tâches récentes + barre de progression globale
 - ✅ Stats : 4 graphiques recharts (pie statut, bar priorité, line hebdo, pie catégorie)
+
+#### Design — Aurora Cosmique (thème final)
+- ✅ Fond sombre `#0d0d1a` avec 3 orbes gradient animées en position fixe (violet, cyan, rose) via keyframes CSS
+- ✅ Glassmorphism : cartes `rgba(255,255,255,0.05)` + `backdrop-blur` + border `rgba(255,255,255,0.08)`
+- ✅ Logo "TaskFlow" avec animation shimmer dégradé indigo→violet→cyan
+- ✅ `StatCard` : count-up animé (requestAnimationFrame, ease-out cubique) + hover glow coloré par thème
+- ✅ `TaskCard` : `card-glow` hover (translateY + box-shadow) + bord gauche coloré par priorité
+- ✅ Stagger d'entrée sur les cards (classes `animate-in stagger-1..6`)
+- ✅ Barre de progression animée (`progress-grow`) sur le Dashboard
+- ✅ Loader 3 dots animés (bounce couleurs indigo/violet/cyan) à la place du spinner texte
+- ✅ Greeting dynamique selon l'heure (Bonjour / Bon après-midi / Bonsoir)
+- ✅ Bouton "🔄 Vérifier maintenant" dans Notifications pour déclencher le cron manuellement
 
 ---
 
