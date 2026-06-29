@@ -10,9 +10,7 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleChange = e => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  const handleChange = e => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -31,63 +29,72 @@ export default function Login() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#0d0d1a] flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent pointer-events-none" />
+    <div className="relative min-h-screen bg-[#0d0d1a] flex items-center justify-center px-4 overflow-hidden">
+      {/* Aurora orbs */}
+      <div className="aurora-orb aurora-1" />
+      <div className="aurora-orb aurora-2" />
+      <div className="aurora-orb aurora-3" />
 
-      <div className="relative glass rounded-3xl p-8 w-full max-w-md">
-        <div className="text-3xl font-black gradient-text mb-6">TaskFlow</div>
+      <div className="relative z-10 w-full max-w-md animate-in">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <span className="text-4xl font-black gradient-text">TaskFlow</span>
+          <p className="text-slate-500 text-sm mt-2">Organisez. Collaborez. Accomplissez.</p>
+        </div>
 
-        <h1 className="text-xl font-bold text-white mb-1">Connexion</h1>
-        <p className="text-slate-400 text-sm mb-6">Bienvenue, ravi de vous revoir.</p>
+        <div className="glass rounded-3xl p-8">
+          <h1 className="text-xl font-bold text-white mb-1">Bon retour !</h1>
+          <p className="text-slate-400 text-sm mb-6">Connectez-vous à votre espace</p>
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-sm">
-            {error}
-          </div>
-        )}
+          {error && (
+            <div className="mb-5 p-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-sm">
+              {error}
+            </div>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-slate-400 text-sm font-medium mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              placeholder="vous@exemple.com"
-              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm transition-all"
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-slate-400 text-sm font-medium mb-1.5">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                placeholder="vous@exemple.com"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-slate-600 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm transition-all"
+              />
+            </div>
 
-          <div>
-            <label className="block text-slate-400 text-sm font-medium mb-1">Mot de passe</label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              placeholder="••••••••"
-              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder-slate-500 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm transition-all"
-            />
-          </div>
+            <div>
+              <label className="block text-slate-400 text-sm font-medium mb-1.5">Mot de passe</label>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                placeholder="••••••••"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-slate-600 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm transition-all"
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2.5 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 disabled:opacity-50 text-white font-semibold rounded-xl transition-all duration-200 text-sm mt-2"
-          >
-            {loading ? 'Connexion…' : 'Se connecter'}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 disabled:opacity-50 text-white font-semibold rounded-xl transition-all duration-200 text-sm mt-2 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5"
+            >
+              {loading ? 'Connexion…' : 'Se connecter →'}
+            </button>
+          </form>
 
-        <p className="mt-6 text-center text-sm text-slate-500">
-          Pas encore de compte ?{' '}
-          <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-            S'inscrire
-          </Link>
-        </p>
+          <p className="mt-6 text-center text-sm text-slate-500">
+            Pas encore de compte ?{' '}
+            <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors">
+              S'inscrire
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )

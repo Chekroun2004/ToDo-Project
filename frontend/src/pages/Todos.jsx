@@ -95,7 +95,11 @@ export default function Todos() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-slate-500 text-sm">Chargement…</div>
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+          <div className="w-2 h-2 rounded-full bg-violet-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+          <div className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+        </div>
       </div>
     )
   }
@@ -177,12 +181,13 @@ export default function Todos() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTodos.map(todo => (
+          {filteredTodos.map((todo, i) => (
             <TaskCard
               key={todo._id}
               todo={todo}
               categories={categories}
               onClick={() => navigate(`/todos/${todo._id}`)}
+              className={`stagger-${Math.min(i + 1, 6)}`}
             />
           ))}
         </div>
