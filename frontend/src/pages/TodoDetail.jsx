@@ -34,7 +34,7 @@ export default function TodoDetail() {
     title: '',
     description: '',
     priority: 'medium',
-    status: 'todo',
+    status: 'pending',
     dueDate: '',
     categoryId: '',
   })
@@ -56,7 +56,7 @@ export default function TodoDetail() {
           title: t.title || '',
           description: t.description || '',
           priority: t.priority || 'medium',
-          status: t.status || 'todo',
+          status: t.status || 'pending',
           dueDate: formatDateInput(t.dueDate),
           categoryId: t.categoryId || '',
         })
@@ -216,9 +216,9 @@ export default function TodoDetail() {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="todo">À faire</option>
+                <option value="pending">À faire</option>
                 <option value="in_progress">En cours</option>
-                <option value="done">Terminé</option>
+                <option value="completed">Terminé</option>
                 <option value="cancelled">Annulé</option>
               </select>
             </div>

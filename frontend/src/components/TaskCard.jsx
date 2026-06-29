@@ -9,9 +9,9 @@ const borderColors = {
 }
 
 const statusConfig = {
-  todo: { label: 'À faire', className: 'bg-gray-100 text-gray-700' },
+  pending: { label: 'À faire', className: 'bg-gray-100 text-gray-700' },
   in_progress: { label: 'En cours', className: 'bg-blue-100 text-blue-700' },
-  done: { label: 'Terminé', className: 'bg-green-100 text-green-700' },
+  completed: { label: 'Terminé', className: 'bg-green-100 text-green-700' },
   cancelled: { label: 'Annulé', className: 'bg-red-100 text-red-700' },
 }
 
@@ -32,7 +32,7 @@ export default function TaskCard({ todo, onClick, categories = [] }) {
 
   const isOverdue =
     todo.dueDate &&
-    todo.status !== 'done' &&
+    todo.status !== 'completed' &&
     todo.status !== 'cancelled' &&
     new Date(todo.dueDate) < new Date()
 
