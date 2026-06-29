@@ -23,6 +23,7 @@ export default function Notifications() {
   const [error, setError] = useState('')
   const [markingAll, setMarkingAll] = useState(false)
   const [clearing, setClearing] = useState(false)
+  const [triggering, setTriggering] = useState(false)
 
   const fetchNotifications = async () => {
     try {
@@ -71,6 +72,18 @@ export default function Notifications() {
     }
   }
 
+  const handleTrigger = async () => {
+    setTriggering(true)
+    try {
+      await api.post('/notifications/trigger')
+      await fetchNotifications()
+    } catch (err) {
+      setError('Erreur lors du déclenchement.')
+    } finally {
+      setTriggering(false)
+    }
+  }
+
   const unreadCount = notifications.filter(n => !n.isRead && !n.read).length
 
   if (loading) {
@@ -91,6 +104,14 @@ export default function Notifications() {
           )}
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={handleTrigger}
+            disabled={triggering}
+            className="px-3 py-1.5 text-sm bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 rounded-xl transition-all disabled:opacity-50"
+            title="Vérifie immédiatement les tâches en retard et génère les notifications"
+          >
+            {triggering ? '…' : '🔄 Vérifier maintenant'}
+          </button>
           {unreadCount > 0 && (
             <button
               onClick={handleMarkAllRead}

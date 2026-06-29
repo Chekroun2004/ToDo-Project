@@ -2,10 +2,21 @@ const express = require('express');
 const router = express.Router();
 const Notification = require('../models/Notification');
 const authMiddleware = require('../middleware/auth');
+const { checkOverdueTodos } = require('../jobs/notificationCron');
 
-// GET /api/notifications/health — doit être déclaré AVANT /:userId
+// GET /api/notifications/health
 router.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'notification-service' });
+});
+
+// POST /api/notifications/trigger — déclencher le cron manuellement
+router.post('/trigger', authMiddleware, async (req, res) => {
+  try {
+    await checkOverdueTodos();
+    res.json({ success: true, message: 'Vérification déclenchée' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, code: 500 });
+  }
 });
 
 // GET /api/notifications/:userId — récupérer les notifications d'un utilisateur
